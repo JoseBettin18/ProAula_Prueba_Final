@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+    <header class="admin-header">
+        <h1>Panel de Administración</h1>
+        <nav>
+            <a th:href="@{/}" class="btn-volver">Volver al inicio</a>
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn-logout">Cerrar sesión</button>
+            </form>
+        </nav>
+    </header>
+
+    <main>
+        <section class="actions">
+            <h2>Gestión de Lugares</h2>
+            <a th:href="@{/admin/lugares/nuevo}" class="btn-agregar">+ Agregar nuevo lugar</a>
+        </section>
+
+        <section class="tabla-lugares">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Ubicación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="lugar : ${lugares}">
+                        <td th:text="${lugar.nombre}">Nombre</td>
+                        <td th:text="${lugar.tipo}">Tipo</td>
+                        <td th:text="${lugar.ubicacion}">Ubicación</td>
+                        <td>
+                            <a th:href="@{'/lugares/' + ${lugar.id}}" class="btn-ver">Ver</a>
+                            <a th:href="@{'/admin/lugares/editar/' + ${lugar.id}}" class="btn-editar">Editar</a>
+                            <a th:href="@{'/admin/lugares/eliminar/' + ${lugar.id}}" class="btn-eliminar">Eliminar</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(lugares)}">
+                        <td colspan="4" style="text-align:center;">No hay lugares registrados.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${lugar.nombre} + ' - Cartagena Tourist'">Detalle del Lugar</title>
+    <link rel="stylesheet" th:href="@{/css/lugares_detalle.css}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img th:src="${lugar.imagenUrl}" alt="Imagen del lugar">
+        </div>
+
+        <div class="info">
+            <h2 th:text="${lugar.nombre}">Nombre del lugar</h2>
+            <p th:text="${lugar.descripcion}">Descripción</p>
+            <p><strong>Ubicación:</strong> <span th:text="${lugar.ubicacion}">Ubicación</span></p>
+
+            <a th:href="@{/lugares}" class="back">← Volver</a>
+        </div>
+    </div>
+</body>
+</html>

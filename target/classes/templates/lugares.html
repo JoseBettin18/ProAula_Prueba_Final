@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Lugares Turísticos - Cartagena Tourist</title>
+    <link rel="stylesheet" th:href="@{/css/lugares.css}">
+</head>
+
+<body>
+    <div class="top-bar">
+        <h1>Cartagena Tourist</h1>
+
+        <div>
+            <div sec:authorize="isAuthenticated()">
+                <span>Bienvenido, <strong sec:authentication="name"></strong></span>
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <button type="submit">Cerrar Sesión</button>
+                </form>
+            </div>
+
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/auth/login}">Iniciar Sesión</a>
+                <a th:href="@{/auth/registro}">Registrarse</a>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div class="grid">
+            <div class="card" th:each="lugar : ${lugares}">
+                <img th:src="${lugar.imagenUrl}" alt="Imagen del lugar">
+                <div class="card-content">
+                    <h3 th:text="${lugar.nombre}">Nombre del lugar</h3>
+                    <p th:text="${lugar.descripcion}">Descripción</p>
+                    <a th:href="@{'/lugares/' + ${lugar.id}}">Ver Detalles</a>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(lugares)}" style="text-align:center; padding:40px;">
+            <p>Aún no hay lugares registrados.</p>
+        </div>
+    </main>
+</body>
+</html>
+
