@@ -1,99 +1,93 @@
-/* Estilos específicos para la página de bienvenida */
-
-/* --- Estilos de Autenticación (NUEVOS) --- */
-.auth-links {
-    position: absolute; 
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-}
-.auth-links a {
-    margin-left: 10px;
-    padding: 8px 15px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-.login-btn {
-    background-color: #007bff; /* Azul */
-    color: white;
-}
-.login-btn:hover {
-    background-color: #0056b3;
-}
-.register-btn {
-    background-color: #28a745; /* Verde */
-    color: white;
-}
-.register-btn:hover {
-    background-color: #1e7e34;
+/* Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
-/* --- Estilos del Contenido Principal (EXISTENTES) --- */
-.welcome-container {
+/* Contenedor principal */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* CARRUSEL DE FONDO */
+.slider {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+}
+
+.slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    animation: fade 18s infinite;
+}
+
+/* Configuración individual de cada imagen */
+.slide:nth-child(1) { animation-delay: 0s; }
+.slide:nth-child(2) { animation-delay: 6s; }
+.slide:nth-child(3) { animation-delay: 12s; }
+
+/* Animación */
+@keyframes fade {
+    0%   { opacity: 0; }
+    8%   { opacity: 1; }
+    33%  { opacity: 1; }
+    41%  { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* Capa oscura */
+.overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* Contenido */
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
-    padding: 50px;
-    background-color: #f4f4f9;
-    border-radius: 15px;
-    max-width: 900px;
-    margin: 50px auto;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    color: #fff;
 }
 
-.welcome-container h1 {
-    color: #007bff; /* Azul vibrante */
-    margin-bottom: 25px;
-    font-size: 2.5em;
+.content h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
 }
 
-.welcome-container p {
-    color: #555;
-    font-size: 1.2em;
+.content p {
+    font-size: 1.2rem;
     margin-bottom: 30px;
 }
 
-.category-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.category-link {
-    display: inline-block;
-    margin: 10px;
-    padding: 15px 30px;
-    background-color: #ffc107; /* Amarillo/Dorado */
-    color: #333;
+/* Botón */
+.btn {
+    padding: 14px 30px;
+    background: #00AEEF;
+    color: white;
     text-decoration: none;
-    border-radius: 8px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    transition: 0.3s;
     font-weight: bold;
-    font-size: 1.1em;
-    transition: background-color 0.3s, transform 0.2s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.category-link:hover {
-    background-color: #e0a800;
-    transform: translateY(-2px);
-    color: white;
+.btn:hover {
+    transform: scale(1.05);
+    background: #008cc9;
 }
-
-/* ... otros estilos de .login-btn y .register-btn ... */
-
-.logout-btn {
-    /* Estilo similar a un botón */
-    padding: 8px 15px;
-    background-color: #dc3545; /* Rojo de peligro */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-.logout-btn:hover {
-    background-color: #c82333;
-}
-
-/* ... el resto de index.css ... */

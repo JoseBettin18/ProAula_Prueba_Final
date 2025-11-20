@@ -4,43 +4,148 @@
     <meta charset="UTF-8">
     <title>Lugares Turísticos - Cartagena Tourist</title>
     <link rel="stylesheet" th:href="@{/css/lugares.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-
 <body>
-    <div class="top-bar">
-        <h1>Cartagena Tourist</h1>
-
-        <div>
-            <div sec:authorize="isAuthenticated()">
-                <span>Bienvenido, <strong sec:authentication="name"></strong></span>
-                <form th:action="@{/logout}" method="post" style="display:inline;">
-                    <button type="submit">Cerrar Sesión</button>
-                </form>
+    <!-- Barra superior -->
+    <header class="top-bar">
+        <h1><i class="fas fa-map-marked-alt"></i> Cartagena Tourist</h1>
+        <div class="user-actions">
+            <div sec:authorize="isAuthenticated()" class="logged-in">
+                <span class="username" sec:authentication="principal.username">usuario@correo.com</span>
+                <button class="profile-btn"><i class="fas fa-user-circle"></i> Perfil &#x25BC;</button>
+                <div class="profile-menu">
+                    <a th:href="@{/perfil}"><i class="fas fa-id-badge"></i> Mi Perfil</a>
+                    <a th:href="@{/mis-reservas}"><i class="fas fa-calendar-check"></i> Mis Reservas</a>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+                    </form>
+                </div>
             </div>
 
-            <div sec:authorize="!isAuthenticated()">
-                <a th:href="@{/auth/login}">Iniciar Sesión</a>
-                <a th:href="@{/auth/registro}">Registrarse</a>
+            <div sec:authorize="!isAuthenticated()" class="guest">
+                <a th:href="@{/auth/login}" class="btn"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+                <a th:href="@{/auth/registro}" class="btn btn-primary"><i class="fas fa-user-plus"></i> Registrarse</a>
             </div>
         </div>
+    </header>
+
+    <!-- Filtros -->
+    <div class="filters">
+        <input type="text" id="searchInput" placeholder="Buscar lugar..." />
+        <select id="typeFilter">
+            <option value="">Todos los tipos</option>
+            <option value="hotel">🏨 Hotel</option>
+            <option value="restaurante">🍽 Restaurante</option>
+            <option value="sitio">🏛 Sitio Turístico</option>
+            <option value="entretenimiento">🎶 Entretenimiento</option>
+        </select>
+        <select id="sortFilter">
+            <option value="">Ordenar por</option>
+            <option value="alfabetico-asc">A-Z</option>
+            <option value="alfabetico-desc">Z-A</option>
+            <option value="calificacion-desc">Calificación alta a baja</option>
+            <option value="calificacion-asc">Calificación baja a alta</option>
+        </select>
     </div>
 
+    <!-- Grid de lugares -->
     <main>
-        <div class="grid">
-            <div class="card" th:each="lugar : ${lugares}">
+        <div class="grid" id="lugaresGrid">
+            <div class="card" th:each="lugar : ${lugares}" 
+                 th:attr="data-tipo=${lugar.tipo}, data-calificacion=${lugar.calificacionPromedio}">
                 <img th:src="${lugar.imagenUrl}" alt="Imagen del lugar">
                 <div class="card-content">
-                    <h3 th:text="${lugar.nombre}">Nombre del lugar</h3>
-                    <p th:text="${lugar.descripcion}">Descripción</p>
-                    <a th:href="@{'/lugares/' + ${lugar.id}}">Ver Detalles</a>
+                    <h3>
+                        <span class="tipo-icon" th:switch="${lugar.tipo}">
+                            <span th:case="'hotel'">🏨</span>
+                            <span th:case="'restaurante'">🍽</span>
+                            <span th:case="'sitio'">🏛</span>
+                            <span th:case="'entretenimiento'">🎶</span>
+                            <span th:case="*">📍</span>
+                        </span>
+                        <span class="nombre-lugar" th:text="${lugar.nombre}">Nombre del lugar</span>
+                    </h3>
+                    <p th:text="${lugar.descripcion}">Descripción del lugar</p>
+                    <div class="card-footer">
+                        <span class="rating"><i class="fas fa-star"></i> <span th:text="${lugar.calificacionPromedio}">0.0</span></span>
+                        <a th:href="@{'/lugares/' + ${lugar.id}}" class="btn btn-details"><i class="fas fa-eye"></i> Ver Detalles</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div th:if="${#lists.isEmpty(lugares)}" style="text-align:center; padding:40px;">
-            <p>Aún no hay lugares registrados.</p>
+        <div th:if="${#lists.isEmpty(lugares)}" class="no-lugares">
+            <p><i class="fas fa-info-circle"></i> Aún no hay lugares registrados.</p>
         </div>
     </main>
+
+    <!-- Scripts -->
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Menú de perfil desplegable
+    const btn = document.querySelector('.profile-btn');
+    const menu = document.querySelector('.profile-menu');
+    if (btn) {
+        btn.addEventListener('click', () => { menu.classList.toggle('show'); });
+    }
+
+    // Elementos de filtro
+    const searchInput = document.getElementById('searchInput');
+    const typeFilter = document.getElementById('typeFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const lugaresGrid = document.getElementById('lugaresGrid');
+
+    // Guardamos todos los cards originales
+    const allCards = Array.from(lugaresGrid.querySelectorAll('.card'));
+
+    function filterLugares() {
+        const searchText = searchInput.value.trim().toLowerCase();
+        const selectedType = typeFilter.value.toLowerCase();
+        const sortValue = sortFilter.value;
+
+        // Filtrado
+        let filtered = allCards.filter(card => {
+            const nombre = card.querySelector('.nombre-lugar').innerText.toLowerCase();
+            const tipo = card.getAttribute('data-tipo').toLowerCase();
+            const matchesSearch = nombre.includes(searchText);
+            const matchesType = selectedType === '' || tipo === selectedType;
+            return matchesSearch && matchesType;
+        });
+
+        // Ordenamiento
+        filtered.sort((a, b) => {
+            const nombreA = a.querySelector('.nombre-lugar').innerText.toLowerCase();
+            const nombreB = b.querySelector('.nombre-lugar').innerText.toLowerCase();
+            const calA = parseFloat(a.getAttribute('data-calificacion')) || 0;
+            const calB = parseFloat(b.getAttribute('data-calificacion')) || 0;
+
+            switch(sortValue) {
+                case 'alfabetico-asc': return nombreA.localeCompare(nombreB);
+                case 'alfabetico-desc': return nombreB.localeCompare(nombreA);
+                case 'calificacion-asc': return calA - calB;
+                case 'calificacion-desc': return calB - calA;
+                default: return 0;
+            }
+        });
+
+        // Mostrar resultados
+        lugaresGrid.innerHTML = '';
+        if(filtered.length > 0){
+            filtered.forEach(card => lugaresGrid.appendChild(card));
+        } else {
+            lugaresGrid.innerHTML = '<p class="no-lugares"><i class="fas fa-info-circle"></i> No se encontraron lugares.</p>';
+        }
+    }
+
+    // Eventos
+    searchInput.addEventListener('input', filterLugares);
+    typeFilter.addEventListener('change', filterLugares);
+    sortFilter.addEventListener('change', filterLugares);
+
+    // Filtro inicial
+    filterLugares();
+});
+</script>
 </body>
 </html>
-

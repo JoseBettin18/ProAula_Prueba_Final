@@ -8,17 +8,74 @@
 
 <body>
     <div class="container">
-        <div class="header">
-            <img th:src="${lugar.imagenUrl}" alt="Imagen del lugar">
+
+        <!-- CARRUSEL -->
+        <div class="carousel-container">
+            <div class="carousel" id="carousel">
+
+                <!-- Imágenes desde Mongo (lugar.imagenes) -->
+                <div class="carousel-item" 
+                     th:each="img, i : ${lugar.imagenes}"
+                     th:classappend="${i.index == 0} ? ' active' : ''">
+                    <img th:src="${img}" alt="Imagen del lugar">
+                </div>
+
+            </div>
+
+            <!-- Flechas -->
+            <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
         </div>
 
+        <!-- INFORMACIÓN -->
         <div class="info">
             <h2 th:text="${lugar.nombre}">Nombre del lugar</h2>
+
             <p th:text="${lugar.descripcion}">Descripción</p>
-            <p><strong>Ubicación:</strong> <span th:text="${lugar.ubicacion}">Ubicación</span></p>
+
+            <p><strong>Dirección:</strong> 
+                <span th:text="${lugar.ubicacion}">Ubicación</span>
+            </p>
+
+            <!-- HORARIOS -->
+            <p><strong>Horarios:</strong> 
+                <span th:text="${lugar.horarios}">Lunes a Domingo 8:00am - 10:00pm</span>
+            </p>
+
+            <!-- BOTÓN DE RESERVA -->
+            <a class="btn-reserva" 
+               th:href="${lugar.urlReserva}" 
+               target="_blank">
+                Reservar Ahora
+            </a>
+
+            <!-- REDES -->
+            <div class="social">
+                <h3>Síguenos</h3>
+                <a th:href="${lugar.facebook}" target="_blank">Facebook</a>
+                <a th:href="${lugar.instagram}" target="_blank">Instagram</a>
+                <a th:href="${lugar.tiktok}" target="_blank">TikTok</a>
+            </div>
 
             <a th:href="@{/lugares}" class="back">← Volver</a>
         </div>
     </div>
+
+    <!-- SCRIPT DEL CARRUSEL -->
+    <script>
+        let slide = 0;
+
+        function moveSlide(n) {
+            const items = document.querySelectorAll(".carousel-item");
+            slide += n;
+
+            if (slide >= items.length) slide = 0;
+            if (slide < 0) slide = items.length - 1;
+
+            items.forEach(i => i.classList.remove("active"));
+            items[slide].classList.add("active");
+        }
+    </script>
+
 </body>
 </html>

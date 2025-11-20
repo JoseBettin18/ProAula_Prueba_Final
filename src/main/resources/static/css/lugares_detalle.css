@@ -1,125 +1,107 @@
 body {
-    font-family: 'Segoe UI', sans-serif;
     margin: 0;
-    background-color: #f8fafc;
-    color: #1e293b;
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
 }
 
-.main-header {
-    background-color: #1e3a8a;
-    color: white;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.main-header .logo {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.main-header nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 0.8rem;
-    font-weight: 600;
-}
-
-.main-header nav a:hover {
-    text-decoration: underline;
-}
-
-.detalle-container {
+.container {
+    width: 90%;
     max-width: 900px;
-    margin: 2rem auto;
-    padding: 1rem;
+    margin: 40px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.detalle-lugar {
-    display: flex;
-    flex-direction: column;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.lugar-imagen {
+/* CARRUSEL */
+.carousel-container {
+    position: relative;
     width: 100%;
-    height: 320px;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.carousel-item {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-item.active {
+    display: block;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
-.lugar-info {
-    padding: 1.5rem;
-}
-
-.lugar-info h2 {
-    margin-top: 0;
-    color: #1e3a8a;
-}
-
-.resenas-section {
-    margin-top: 2rem;
-    background: white;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.resena {
-    border-bottom: 1px solid #e2e8f0;
-    padding: 0.8rem 0;
-}
-
-.resena:last-child {
-    border-bottom: none;
-}
-
-.resena h4 {
-    color: #1e3a8a;
-    margin: 0;
-}
-
-.resena .fecha {
-    font-size: 0.85rem;
-    color: #64748b;
-}
-
-.nueva-resena {
-    margin-top: 2rem;
-}
-
-.nueva-resena textarea {
-    width: 100%;
-    height: 100px;
-    padding: 0.7rem;
-    border-radius: 8px;
-    border: 1px solid #cbd5e1;
-    resize: vertical;
-}
-
-.btn-enviar {
-    background: #2563eb;
-    color: white;
+/* Flechas */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 14px;
+    font-size: 22px;
     border: none;
-    border-radius: 8px;
-    padding: 0.6rem 1.2rem;
     cursor: pointer;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border-radius: 50%;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* INFO */
+.info h2 {
+    margin-top: 0;
+    font-size: 28px;
+}
+
+.btn-reserva {
+    display: inline-block;
+    background: #ff6a00;
+    padding: 12px 20px;
+    color: #fff;
     font-weight: bold;
-    margin-top: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    margin: 15px 0;
 }
 
-.btn-enviar:hover {
-    background: #1d4ed8;
+.btn-reserva:hover {
+    background: #e55d00;
 }
 
-footer {
-    background: #1e3a8a;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
+/* REDES SOCIALES */
+.social {
+    margin-top: 20px;
+}
+
+.social a {
+    display: inline-block;
+    margin-right: 10px;
+    color: #0077cc;
+    text-decoration: none;
+}
+
+.social a:hover {
+    text-decoration: underline;
+}
+
+/* Volver */
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    color: #444;
+    text-decoration: none;
+}
+
+.back:hover {
+    text-decoration: underline;
 }

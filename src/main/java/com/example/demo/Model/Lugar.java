@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document(collection = "lugares")
 public class Lugar {
 
@@ -13,12 +15,26 @@ public class Lugar {
     private String descripcion;
     private String ubicacion;
     private String imagenUrl;
-    private String tipo; // hotel, restaurante, sitio, entretenimiento
+    private String tipo;
+    private double calificacionPromedio;
 
     @DBRef
-    private Usuario usuario; // Relación con el creador
+    private Usuario usuario;
 
+    // 🔥 CAMPOS NUEVOS PARA EL CARRUSEL Y LA PÁGINA DE RESERVA
+    private List<String> imagenes;
+    private String urlReserva;
+
+    // 🔥 CAMPOS NUEVOS PARA REDES Y HORARIOS
+    private String horarios;
+    private String facebook;
+    private String instagram;
+    private String tiktok;
+
+    // ----------------------------------------
     // Getters y Setters
+    // ----------------------------------------
+
     public String getId() {
         return id;
     }
@@ -67,12 +83,67 @@ public class Lugar {
         this.tipo = tipo;
     }
 
-    // 🔹 Getters y Setters del usuario (faltaban)
+    public double getCalificacionPromedio() {
+        return calificacionPromedio;
+    }
+
+    public void setCalificacionPromedio(double calificacionPromedio) {
+        this.calificacionPromedio = calificacionPromedio;
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public List<String> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<String> imagenes) {
+        this.imagenes = imagenes;
+    }
+
+    public String getUrlReserva() {
+        return urlReserva;
+    }
+
+    public void setUrlReserva(String urlReserva) {
+        this.urlReserva = urlReserva;
+    }
+
+    public String getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(String horarios) {
+        this.horarios = horarios;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public String getTiktok() {
+        return tiktok;
+    }
+
+    public void setTiktok(String tiktok) {
+        this.tiktok = tiktok;
     }
 }

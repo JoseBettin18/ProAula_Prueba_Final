@@ -1,72 +1,81 @@
+/* Fondo general con tu imagen */
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f1f5f9;
     margin: 0;
     padding: 0;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+
+    /* Imagen de fondo que subiste tú */
+    background: url("/images/auth.avif") no-repeat center center/cover;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
-.auth-container {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    width: 360px;
+/* Contenedores (login y registro) */
+.auth-container,
+.registro-container {
+    width: 380px;
+    background: rgba(255, 255, 255, 0.88);
+    padding: 35px;
+    border-radius: 18px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.35);
     text-align: center;
 }
 
-.auth-container h1 {
-    margin-bottom: 1.5rem;
-    color: #1e293b;
+/* Títulos */
+h2 {
+    color: #007b7f;
+    margin-bottom: 20px;
+    font-weight: 700;
 }
 
-.form-group {
-    margin-bottom: 1rem;
-    text-align: left;
-}
-
-.form-group label {
-    font-weight: 600;
-    margin-bottom: 0.4rem;
-    display: block;
-}
-
-.form-group input {
+/* Inputs */
+input, select {
     width: 100%;
-    padding: 0.7rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 10px;
+    border: 2px solid #009da0;
+    background: rgba(255, 255, 255, 0.85);
+    font-size: 15px;
+    transition: 0.3s;
 }
 
-.btn-primary {
-    background-color: #2563eb;
+input:focus, select:focus {
+    border-color: #f7b733;
+    box-shadow: 0 0 8px rgba(247, 183, 51, 0.6);
+}
+
+/* Botón */
+button, .btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #00c6b8, #f7b733);
     color: white;
+    font-size: 17px;
+    font-weight: bold;
     border: none;
-    padding: 0.7rem 1.5rem;
-    border-radius: 8px;
-    font-weight: bold;
+    border-radius: 12px;
     cursor: pointer;
-    width: 100%;
+    transition: 0.3s;
+    margin-top: 10px;
 }
 
-.btn-primary:hover {
-    background-color: #1d4ed8;
+button:hover, .btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 5px 18px rgba(0,0,0,0.3);
 }
 
-.auth-footer {
-    margin-top: 1rem;
-    color: #475569;
-}
-
-.auth-footer a {
-    color: #2563eb;
-    text-decoration: none;
+/* Enlaces */
+a {
+    color: #007b7f;
     font-weight: bold;
+    transition: 0.3s;
 }
 
-.auth-footer a:hover {
-    text-decoration: underline;
+a:hover {
+    color: #f7b733;
 }

@@ -7,14 +7,28 @@
 </head>
 
 <body>
-    <div class="overlay">
-        <h1>¡Descubre la Magia de Cartagena!</h1>
-        <p>Explora los mejores lugares turísticos, hoteles, restaurantes y más.</p>
 
-        <div class="buttons">
-            <a th:href="@{/auth/login}" class="btn">Iniciar Sesión</a>
-            <a th:href="@{/auth/registro}" class="btn">Registrarse</a>
-        </div>
+<div class="hero">
+
+    <!-- Carrusel de fondo -->
+    <div class="slider">
+        <div class="slide" style="background-image: url('/images/imagen1.avif');"></div>
+        <div class="slide" style="background-image: url('/images/imagen2.jpg');"></div>
+        <div class="slide" style="background-image: url('/images/imagen3.jpg');"></div>
     </div>
+
+    <!-- Capa oscura -->
+    <div class="overlay"></div>
+
+    <!-- Contenido -->
+    <div class="content">
+        <h1>Descubre la Magia de Cartagena</h1>
+        <p>Explora los mejores hoteles, playas, restaurantes y lugares turísticos de la ciudad.</p>
+
+        <a th:href="@{/auth/login}" class="btn">Iniciar Sesión</a>
+    </div>
+
+</div>
+
 </body>
 </html>
